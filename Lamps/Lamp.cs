@@ -8,7 +8,7 @@ class Lamp : MonoBehaviour
 	public float nighttimeAmount = 1.0f;
 	public float blinkInChance = 0.01f;
 
-	private Light light;
+	private Light lamp;
 	private float dayTimeModifier = 0.0f;
 	private float targetIntensity = 0.0f;
 
@@ -17,12 +17,12 @@ class Lamp : MonoBehaviour
 		GameObject lampGO = new GameObject("Lamp Light");
 		lampGO.transform.parent = transform;
 		lampGO.transform.localPosition = Vector3.up;
-		light = lampGO.AddComponent<Light>();
-		light.type = LightType.Point;
+		lamp = lampGO.AddComponent<Light>();
+		lamp.type = LightType.Point;
 		targetIntensity = 0.0f;
-		light.intensity = targetIntensity;
-		light.range = 25.0f;
-		light.color = Color.Lerp(Color.yellow, Color.white, 0.5f);
+		lamp.intensity = targetIntensity;
+		lamp.range = 25.0f;
+		lamp.color = Color.Lerp(Color.yellow, Color.white, 0.5f);
 	}
 
 	public void Update()
@@ -62,11 +62,14 @@ class Lamp : MonoBehaviour
 			}
 		}
 
-		light.intensity = dayTimeModifier * targetIntensity;
+		lamp.intensity = dayTimeModifier * targetIntensity;
 	}
 
 	public void CleanUp()
 	{
-		Destroy(light.gameObject);
+		if (lamp != null)
+		{
+			Destroy(lamp.gameObject);
+		}
 	}
 }
