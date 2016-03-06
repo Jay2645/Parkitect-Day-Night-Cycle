@@ -44,7 +44,7 @@ public class DayNight : MonoBehaviour
 	/// <summary>
 	/// The current Day/Night cycle hour.
 	/// </summary>
-	public int hour
+	public static int hour
 	{
 		get;
 		private set;
@@ -52,7 +52,7 @@ public class DayNight : MonoBehaviour
 	/// <summary>
 	/// The current Day/Night cycle minute.
 	/// </summary>
-	public int minute
+	public static int minute
 	{
 		get;
 		private set;
@@ -60,7 +60,7 @@ public class DayNight : MonoBehaviour
 	/// <summary>
 	/// The current Day/Night cycle second.
 	/// </summary>
-	public float second
+	public static float second
 	{
 		get;
 		private set;
@@ -84,9 +84,15 @@ public class DayNight : MonoBehaviour
 		private set;
 	}
 
+	public static DayNight Instance
+	{
+		get;
+		private set;
+	}
 
 	private void Start()
 	{
+		Instance = this;
 		sun = gameObject.GetComponent<Light>();
 		initialSunAngle = transform.rotation;
 		startIntensity = sun.intensity;
