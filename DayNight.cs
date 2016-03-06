@@ -9,13 +9,28 @@ public enum DayStatus
 
 public class DayNight : MonoBehaviour
 {
+	/// <summary>
+	/// How long an entire day/night cycle takes, in minutes
+	/// </summary>
 	public float dayCycleInMinutes = 5f;
+	/// <summary>
+	/// What hour does sunrise start?
+	/// </summary>
 	[Range(0, 12)]
 	public int sunriseStartHour = 5;
+	/// <summary>
+	/// What hour does sunrise become daytime?
+	/// </summary>
 	[Range(0, 12)]
 	public int sunriseEndHour = 8;
+	/// <summary>
+	/// What hour does sunset start?
+	/// </summary>
 	[Range(12, 24)]
 	public int sunsetStartHour = 16;
+	/// <summary>
+	/// What hour does sunset become nighttime?
+	/// </summary>
 	[Range(12, 24)]
 	public int sunsetEndHour = 18;
 
@@ -26,16 +41,43 @@ public class DayNight : MonoBehaviour
 	private Quaternion initialSunAngle;
 	private Light sun;
 
-	public int hour = 0;
-	public int minute = 0;
-	public float second = 0.0f;
-	private float sunShaftIntensity;
+	/// <summary>
+	/// The current Day/Night cycle hour.
+	/// </summary>
+	public int hour
+	{
+		get;
+		private set;
+	}
+	/// <summary>
+	/// The current Day/Night cycle minute.
+	/// </summary>
+	public int minute
+	{
+		get;
+		private set;
+	}
+	/// <summary>
+	/// The current Day/Night cycle second.
+	/// </summary>
+	public float second
+	{
+		get;
+		private set;
+	}
 
+	/// <summary>
+	/// What's the current status of the day?
+	/// </summary>
 	public static DayStatus dayStatus
 	{
 		get;
 		private set;
 	}
+	/// <summary>
+	/// How close to midnight is it?
+	/// 0.0 is 12:00:01, while 1.0 is 11:59:59.
+	/// </summary>
 	public static float dayPercent
 	{
 		get;
@@ -53,7 +95,6 @@ public class DayNight : MonoBehaviour
 		sunsetDiff = sunsetEndHour - sunsetStartHour;
 	}
 
-	// Update is called once per frame
 	private void Update()
 	{
 		RotateSun();
@@ -131,6 +172,9 @@ public class DayNight : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Turns off the Day/Night cycle and resets the sun back to normal.
+	/// </summary>
 	public void Reset()
 	{
 		transform.rotation = initialSunAngle;

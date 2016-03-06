@@ -1,7 +1,7 @@
 {
     "BaseDir": "",
     "EntryPoint": "Main",
-    "IsDevelopment": true,
+    "IsDevelopment": false,
     "Name": "Day/Night Cycle",
     "Project": "DayNight.csproj"
 }

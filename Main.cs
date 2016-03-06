@@ -7,6 +7,8 @@ public class Main : IMod
 
 	public void onEnabled()
 	{
+		// Find where the sun is
+		// The sun is defined by Unity's procedural skybox as the brightest directional light in the sky
 		Light[] allLights = Object.FindObjectsOfType<Light>();
 		Light sun = null;
 		foreach (Light light in allLights)
@@ -25,8 +27,11 @@ public class Main : IMod
 
 	public void onDisabled()
 	{
+		// Turn off the day/night cycle
 		dayNight.Reset();
+		// Destroy all lamps
 		lampManager.CleanUp();
+		// Clean up our Components
 		Object.Destroy(lampManager);
 		Object.Destroy(dayNight);
 	}
