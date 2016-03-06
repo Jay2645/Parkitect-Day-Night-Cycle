@@ -11,13 +11,13 @@ public class DayNight : MonoBehaviour
 {
 	public float dayCycleInMinutes = 5f;
 	[Range(0, 12)]
-	public int sunriseStartHour = 4;
+	public int sunriseStartHour = 5;
 	[Range(0, 12)]
 	public int sunriseEndHour = 8;
 	[Range(12, 24)]
-	public int sunsetStartHour = 17;
+	public int sunsetStartHour = 16;
 	[Range(12, 24)]
-	public int sunsetEndHour = 19;
+	public int sunsetEndHour = 18;
 
 	private float sunriseDiff = 0.0f;
 	private float sunsetDiff = 0.0f;

@@ -3,6 +3,7 @@
 public class Main : IMod
 {
 	private DayNight dayNight;
+	private LampManager lampManager;
 
 	public void onEnabled()
 	{
@@ -19,11 +20,14 @@ public class Main : IMod
 			}
 		}
 		dayNight = sun.gameObject.AddComponent<DayNight>();
+		lampManager = sun.gameObject.AddComponent<LampManager>();
 	}
 
 	public void onDisabled()
 	{
 		dayNight.Reset();
+		lampManager.CleanUp();
+		Object.Destroy(lampManager);
 		Object.Destroy(dayNight);
 	}
 
