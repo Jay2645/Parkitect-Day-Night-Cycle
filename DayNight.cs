@@ -10,6 +10,28 @@ public enum DayStatus
 public class DayNight : MonoBehaviour
 {
 	/// <summary>
+	/// Called whenever the hour changes to a new hour.
+	/// </summary>
+	/// <param name="hour">The new hour.</param>
+	public delegate void OnHourChangedHandler(int hour);
+	/// <summary>
+	/// Called when the day begins.
+	/// </summary>
+	public delegate void OnDayStartHandler();
+	/// <summary>
+	/// Called when sunset begins.
+	/// </summary>
+	public delegate void OnSunsetStartHandler();
+	/// <summary>
+	/// Called when night begins.
+	/// </summary>
+	public delegate void OnNightStartHandler();
+	/// <summary>
+	/// Called when sunrise begins.
+	/// </summary>
+	public delegate void OnSunriseStartHandler();
+
+	/// <summary>
 	/// How long an entire day/night cycle takes, in minutes
 	/// </summary>
 	public float dayCycleInMinutes = 5f;
@@ -90,6 +112,28 @@ public class DayNight : MonoBehaviour
 		private set;
 	}
 
+	/// <summary>
+	/// Called when the day starts.
+	/// </summary>
+	public event OnDayStartHandler OnDayStart;
+	/// <summary>
+	/// Called when sunset starts.
+	/// </summary>
+	public event OnSunsetStartHandler OnSunsetStart;
+	/// <summary>
+	/// Called when night starts.
+	/// </summary>
+	public event OnNightStartHandler OnNightStart;
+	/// <summary>
+	/// Called when sunrise starts.
+	/// </summary>
+	public event OnSunriseStartHandler OnSunriseStart;
+
+	/// <summary>
+	/// Called when the hour changes.
+	/// </summary>
+	public event OnHourChangedHandler OnHourChanged;
+
 	private void Start()
 	{
 		Instance = this;
@@ -133,15 +177,23 @@ public class DayNight : MonoBehaviour
 	private void DetermineTime()
 	{
 		float hourAmount = 24.0f * dayPercent;
+		int lastHour = hour;
 		hour = Mathf.FloorToInt(hourAmount);
 		float minuteAmount = (hourAmount - hour) * 60.0f;
 		minute = Mathf.FloorToInt(minuteAmount);
 		second = (minuteAmount - (float)minute) * 60.0f;
+
+		if (lastHour != hour && OnHourChanged != null)
+		{
+			OnHourChanged(hour);
+		}
 	}
 
 	private void CauseSunriseSunset()
 	{
 		float time = (float)hour + ((float)minute / 60.0f);
+		// Cache DayStatus so we can check to see if it changed
+		DayStatus oldStatus = dayStatus;
 		if (hour >= sunriseStartHour && hour < sunriseEndHour)
 		{
 			// Sun is rising
@@ -150,6 +202,11 @@ public class DayNight : MonoBehaviour
 			float adjustedTime = time - sunriseStartHour;
 			float sunrisePercent = adjustedTime / sunriseDiff;
 			sun.intensity = Mathf.Lerp(0.0f, startIntensity, sunrisePercent);
+
+			if (oldStatus != dayStatus && OnSunriseStart != null)
+			{
+				OnSunriseStart();
+			}
 		}
 		else
 		{
@@ -161,6 +218,11 @@ public class DayNight : MonoBehaviour
 				float adjustedTime = time - sunsetStartHour;
 				float sunsetPercent = adjustedTime / sunsetDiff;
 				sun.intensity = Mathf.Lerp(startIntensity, 0.0f, sunsetPercent);
+
+				if (oldStatus != dayStatus && OnSunsetStart != null)
+				{
+					OnSunsetStart();
+				}
 			}
 			else if (hour >= sunriseEndHour && hour < sunsetStartHour)
 			{
@@ -168,12 +230,21 @@ public class DayNight : MonoBehaviour
 				dayStatus = DayStatus.Daytime;
 				sun.intensity = startIntensity;
 
+				if (oldStatus != dayStatus && OnDayStart != null)
+				{
+					OnDayStart();
+				}
 			}
 			else
 			{
 				// Is nighttime
 				dayStatus = DayStatus.Nighttime;
 				sun.intensity = 0.0f;
+
+				if (oldStatus != dayStatus && OnNightStart != null)
+				{
+					OnNightStart();
+				}
 			}
 		}
 	}
