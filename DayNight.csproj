@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DayNight.cs" />
+    <Compile Include="EnvironmentManager.cs" />
     <Compile Include="Lamps\Lamp.cs" />
     <Compile Include="Lamps\LampManager.cs" />
     <Compile Include="Main.cs" />

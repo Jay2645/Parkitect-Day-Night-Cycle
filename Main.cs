@@ -4,6 +4,7 @@ public class Main : IMod
 {
 	private DayNight dayNight;
 	private LampManager lampManager;
+	private EnvironmentManager environmentManager;
 
 	public void onEnabled()
 	{
@@ -23,6 +24,7 @@ public class Main : IMod
 		}
 		dayNight = sun.gameObject.AddComponent<DayNight>();
 		lampManager = sun.gameObject.AddComponent<LampManager>();
+		environmentManager = sun.gameObject.AddComponent<EnvironmentManager>();
 	}
 
 	public void onDisabled()
@@ -32,6 +34,7 @@ public class Main : IMod
 		// Destroy all lamps
 		lampManager.CleanUp();
 		// Clean up our Components
+		Object.Destroy(environmentManager);
 		Object.Destroy(lampManager);
 		Object.Destroy(dayNight);
 	}
