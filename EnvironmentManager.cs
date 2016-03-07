@@ -17,6 +17,11 @@ public class EnvironmentManager : MonoBehaviour
 	/// </summary>
 	public float dayTirednessSubtractAmount = 0.05f;
 
+	/// <summary>
+	/// Whether we should change temperature at night.
+	/// </summary>
+	public bool changeTemperatureAtNight = true;
+
 	private float[] dayTemperatureMax;
 	private float[] nightTemperatureMax;
 
@@ -55,6 +60,10 @@ public class EnvironmentManager : MonoBehaviour
 
 	private void ChangeToNightTemps()
 	{
+		if (!changeTemperatureAtNight)
+		{
+			return;
+		}
 		FieldInfo tempField = GetTemperatureMaxField();
 		tempField.SetValue(WeatherController.Instance, nightTemperatureMax);
 		// Force-update temperature info
@@ -65,6 +74,10 @@ public class EnvironmentManager : MonoBehaviour
 
 	private void ChangeToDayTemps()
 	{
+		if (!changeTemperatureAtNight)
+		{
+			return;
+		}
 		FieldInfo tempField = GetTemperatureMaxField();
 		tempField.SetValue(WeatherController.Instance, dayTemperatureMax);
 		// Force-update temperature info

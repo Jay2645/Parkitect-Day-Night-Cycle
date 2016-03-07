@@ -13,9 +13,9 @@ class LampManager : MonoBehaviour
 	public List<Lamp> allLamps = new List<Lamp>();
 	private float currentTime = 0.0f;
 
-	private void Update()
+	private void FixedUpdate()
 	{
-		currentTime += Time.deltaTime;
+		currentTime += Time.fixedDeltaTime;
 		if (currentTime >= lampCheckTime)
 		{
 			FindLamps();
