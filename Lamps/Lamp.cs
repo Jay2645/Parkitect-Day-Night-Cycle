@@ -46,6 +46,7 @@ class Lamp : MonoBehaviour
 		targetIntensity = 0.0f;
 		lamp.intensity = targetIntensity;
 		lamp.range = range;
+		lamp.shadows = LightShadows.None;
 		// Initialize it to a whitish-yellow color
 		lamp.color = Color.Lerp(Color.yellow, Color.white, 0.5f);
 	}
