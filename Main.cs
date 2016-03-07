@@ -125,7 +125,12 @@ namespace DayNightCycle
 
 		public void ReadSettingsFile()
 		{
-			settingsValueDictionary = Json.Deserialize(File.ReadAllText(Path + @"/settings.json")) as Dictionary<string, object>;
+			string path = Path + @"/settings.json";
+			if (!File.Exists(path))
+			{
+				return;
+			}
+			settingsValueDictionary = Json.Deserialize(File.ReadAllText(path)) as Dictionary<string, object>;
 			if (dayNight != null)
 			{
 				float dayCycleLength;
