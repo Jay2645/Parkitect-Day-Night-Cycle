@@ -1,5 +1,7 @@
 # Day/Night Cycle
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 This adds a working Day/Night Cycle to Parkitect. Features:
 
 * Sun sets, night falls, sun rises again
